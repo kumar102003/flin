@@ -1,7 +1,8 @@
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
-import { auth } from "./firebase"; 
+import { auth, db } from "./firebase"; // Import Firestore instance
 import { toast } from "react-toastify";
+import { doc, setDoc } from "firebase/firestore"; // Firestore methods
 
 function Register() {
   const [email, setEmail] = useState("");
@@ -12,19 +13,27 @@ function Register() {
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      
-      await createUserWithEmailAndPassword(auth, email, password);
-      const user = auth.currentUser;
-      console.log(user);
+      // Create user with email and password
+      const result = await createUserWithEmailAndPassword(auth, email, password);
+      const user = result.user;
 
       if (user) {
+        // Save user data in Firestore
+        await setDoc(doc(db, "users", user.uid), {
+          firstName: fname,
+          lastName: lname,
+          email: user.email,
+          createdAt: new Date(),
+        });
+
         console.log("User Registered Successfully!!");
+        window.location.href = "/home";
         toast.success("User Registered Successfully!!", {
           position: "top-center",
         });
       }
     } catch (error) {
-      console.log(error.message);
+      console.error("Error during registration:", error.message);
       toast.error(error.message, {
         position: "bottom-center",
       });
@@ -89,4 +98,5 @@ function Register() {
     </form>
   );
 }
+
 export default Register;

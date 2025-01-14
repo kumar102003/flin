@@ -10,7 +10,7 @@ import {
 import Home from "./components/Home";
 import Login from "./components/login";
 import SignUp from "./components/register";
-import Profile from "./components/profile";
+import Profile from "./components/Profile";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";

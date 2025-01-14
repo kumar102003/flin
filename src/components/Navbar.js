@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { auth } from './firebase'; // Import your Firebase auth instance
 import { onAuthStateChanged, signOut } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate for routing
+import userImage from '../assest/user.png'
 
+// Navbar component
 const Navbar = () => {
   const [user, setUser] = useState(null);
+  const navigate = useNavigate(); // Initialize navigate for routing
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -16,14 +20,18 @@ const Navbar = () => {
     try {
       await signOut(auth);
       alert('You have logged out successfully!');
+      navigate('/login'); // Redirect to login after logout
     } catch (error) {
       console.error('Error logging out:', error);
     }
   };
 
+  const handleProfile = () => {
+    navigate('/profile'); // Navigate to the profile page
+  };
+
   return (
     <div>
-      <div>
       <nav
         className="navbar navbar-expand-lg bg-body-tertiary"
         style={{
@@ -35,7 +43,9 @@ const Navbar = () => {
         }}
       >
         <div className="container-fluid">
-          <a className="navbar-brand" href="/home">Navbar</a>
+        <a className="navbar-brand text-primary fs-1 fw-bold text-uppercase letter-spacing" href="/home">
+  FLIN
+</a>
           <button
             className="navbar-toggler"
             type="button"
@@ -50,25 +60,42 @@ const Navbar = () => {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <a className="nav-link active" aria-current="page" href="/mydata">Mydata</a>
+                <a className="nav-link active text-primary" aria-current="page" href="/mydata">Mydata</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="/aboutus">About Us</a>
+                <a className="nav-link text-primary" href="/aboutus">About Us</a>
               </li>
-              <li className="nav-item">
-                <a className="nav-link disabled" aria-disabled="true">Disabled</a>
-              </li>
+              {/* <li className="nav-item">
+                <a className="nav-link disabled text-primary" aria-disabled="true">Disabled</a>
+              </li> */}
             </ul>
             <div className="d-flex">
               {user ? (
-                <button
-                  className="btn btn-outline-danger me-2"
-                  onClick={handleLogout}
-                >
-                  Logout
-                </button>
+                <>
+                  {/* User's Profile Image, visible if logged in */}
+                  <img
+                    src={user.photoURL || userImage}
+                    alt="User"
+                    className="rounded-circle"
+                    style={{
+                      width: '40px',
+                      height: '40px',
+                      cursor: 'pointer',
+                      marginRight: '10px',
+                    }}
+                    onClick={handleProfile} 
+                  />
+                 
+                  <button
+                    className="btn btn-outline-danger me-2"
+                    onClick={handleLogout}
+                  >
+                    Logout
+                  </button>
+                </>
               ) : (
                 <>
+                  {/* Login and Signup Buttons, visible if user is not logged in */}
                   <a className="btn btn-outline-primary me-2" href="/login">
                     Login
                   </a>
@@ -81,7 +108,6 @@ const Navbar = () => {
           </div>
         </div>
       </nav>
-      </div>
     </div>
   );
 };
