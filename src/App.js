@@ -19,6 +19,8 @@ import { auth } from "./components/firebase";
 import Mydata from "./components/Mydata";
 import AboutUs from "./components/AboutUs";
 import Navbar from "./components/Navbar";
+import Upload from "./components/Upload";
+import Upgrade from "./components/Upgrade";
 
 function App() {
   const [user, setUser] = useState();
@@ -75,7 +77,9 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/home" element={<Home />} />
           <Route path="/mydata" element={<Mydata/>} />
+          <Route path="/upload" element={<Upload/>} />
           <Route  path = "aboutus" element = {<AboutUs/>} />
+          <Route  path = "upgrade" element = {<Upgrade/>} />
         </Routes>
 
         {/* Toast Notifications */}

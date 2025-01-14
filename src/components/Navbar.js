@@ -30,6 +30,9 @@ const Navbar = () => {
     navigate('/profile'); // Navigate to the profile page
   };
 
+  const handleupgrade =  () => {
+    navigate('/upgrade'); // Navigate to the upgrade page
+  }
   return (
     <div>
       <nav
@@ -43,7 +46,7 @@ const Navbar = () => {
         }}
       >
         <div className="container-fluid">
-        <a className="navbar-brand text-primary fs-1 fw-bold text-uppercase letter-spacing" href="/home">
+        <a className="navbar-brand text-primary fs-1 fw-bold text-uppercase letter-spacing mx-3" href="/home">
   FLIN
 </a>
           <button
@@ -59,8 +62,8 @@ const Navbar = () => {
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-              <li className="nav-item">
-                <a className="nav-link active text-primary" aria-current="page" href="/mydata">Mydata</a>
+              <li className="nav-item mx-5">
+                <a className="nav-link active text-primary " aria-current="page" href="/mydata">Mydata</a>
               </li>
               <li className="nav-item">
                 <a className="nav-link text-primary" href="/aboutus">About Us</a>
@@ -73,6 +76,12 @@ const Navbar = () => {
               {user ? (
                 <>
                   {/* User's Profile Image, visible if logged in */}
+                  <button
+                    className="btn btn-outline-primary me-2"
+                    onClick={handleupgrade}
+                  >
+                    Upgrade
+                  </button>
                   <img
                     src={user.photoURL || userImage}
                     alt="User"

@@ -2,6 +2,7 @@ import React from "react";
 import Navbar from "./Navbar";
 import { auth } from "./firebase";
 import WeProvide from "./HomeContent/WeProvide";
+import Upload from "./Upload";
 
 const Home = () => {
   async function handleLogout() {
@@ -17,7 +18,7 @@ const Home = () => {
   return (
     <div>
         
-      
+      <Upload/>
       <WeProvide/>
     </div>
   );
